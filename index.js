@@ -25,11 +25,11 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date?", (req, res) => {
-	const input = Number(req.params.date);
+	const input = Number(req.params.date) ? Number(req.params.date) : Math.floor(new Date(req.params.date).getTime());
 	const date = new Date(input);
 
 	if (req.params.date === undefined) {
-		res.json({ unix: Math.floor(Date.now() / 1000), utc: new Date().toUTCString() });
+		res.json({ unix: Date.now(), utc: new Date().toUTCString() });
 	} else if (isNaN(input)) {
 		res.json({ error: "Invalid Date" });
 	} else {
